@@ -1,7 +1,7 @@
 {
   "name": "ludo",
   "version": "1.0.0",
-  "description": "A game launcher for crypto and web3 space",
+  "description": "A game launcher for crypto and web3 space.",
   "main": "./out/main/index.js",
   "author": "Backi",
   "homepage": "",
