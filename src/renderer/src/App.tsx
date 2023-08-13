@@ -1,145 +1,172 @@
-import Versions from './components/Versions'
-import icons from './assets/icons.svg'
+import { Button, FluentProvider, webLightTheme } from '@fluentui/react-components'
+import { useState } from 'react'
+import FilepathSelection from './components/FilepathSelection'
+import GameCardMasonry from './components/GameCardMasonry'
+import { addGameEntry, getListOfGames } from './scripts/storage'
+import { GameData } from './types/game'
+import { SocialsProp } from './types/socials'
+
+
+
+const socials: SocialsProp = [
+    {
+        name: 'Discord',
+        url: 'https://dmitripavlutin.com/typescript-function-type/'
+    },
+    {
+        name: 'Discord',
+        url: 'https://dmitripavlutin.com/typescript-function-type/'
+    },
+    {
+        name: 'Twitter',
+        url: 'https://dmitripavlutin.com/typescript-function-type/'
+    }
+]
+
+const cards: GameData[] = [
+    {
+        installed: 'NOT_INSTALLED',
+        // path: '',
+        metadata: {
+            title: 'Ludo Unity Demo',
+            image: 'https://cdn.discordapp.com/attachments/522069091255582731/1140201571511173120/image.png',
+            description: '',
+            icon: 'https://cdn.discordapp.com/attachments/522069091255582731/1139225777204887592/favicon_3.png'
+        },
+        token: {
+            policy: 'aaaa',
+            assetName: 'Demo'
+        },
+        remote: {
+            versionControl: 'GIT',
+            url: 'https://github.com/Felippo001/empty-unity-project.git',
+            branch: 'master',
+            entry: {
+                win: "Build/win/Empty Test Project.exe"
+            }
+        },
+        badges: ['VERIFIED', 'OPEN_SOURCE'],
+        socials: socials
+    },
+    // {
+    //     installed: 'NOT_INSTALLED',
+    //     metadata: {
+    //         title: 'Blockchain Party - Zombie',
+    //         image: 'https://cdn.dlcompare.com/game_tetiere/upload/gameimage/file/call-of-duty-black-ops-2-file-48980dd1.jpeg',
+    //         description: '',
+    //         icon: 'https://cdn.discordapp.com/attachments/522069091255582731/1139225777204887592/favicon_3.png'
+    //     },
+    //     token: {
+    //         policy: '',
+    //         assetName: ''
+    //     },
+    //     badges: ['VERIFIED']
+    // },
+    // {
+    //     installed: 'NOT_INSTALLED',
+    //     metadata: {
+    //         title: 'Blockchain Party - Zombie',
+    //         image: 'https://cdn.discordapp.com/attachments/522069091255582731/1139222000741666987/landing2.png',
+    //         description: '',
+    //         icon: 'https://cdn.discordapp.com/attachments/522069091255582731/1139225777204887592/favicon_3.png'
+    //     },
+    //     token: {
+    //         policy: '',
+    //         assetName: ''
+    //     },
+    //     badges: ['UNKOWN']
+    // },
+    // {
+    //     installed: 'INSTALLED',
+    //     path: '',
+    //     metadata: {
+    //         title: 'Blockchain Party - Zombie',
+    //         image: 'https://cdn.dlcompare.com/game_tetiere/upload/gameimage/file/call-of-duty-black-ops-2-file-48980dd1.jpeg',
+    //         description: '',
+    //         icon: 'https://cdn.discordapp.com/attachments/522069091255582731/1139225777204887592/favicon_3.png'
+    //     },
+    //     token: {
+    //         policy: '',
+    //         assetName: ''
+    //     },
+    //     badges: ['UNKOWN']
+    // },
+    // {
+    //     installed: 'NOT_INSTALLED',
+    //     metadata: {
+    //         title: 'Blockchain Party - Zombie',
+    //         image: 'https://cdn.discordapp.com/attachments/522069091255582731/1139222000741666987/landing2.png',
+    //         description: '',
+    //         icon: 'https://cdn.discordapp.com/attachments/522069091255582731/1139225777204887592/favicon_3.png'
+    //     },
+    //     token: {
+    //         policy: '',
+    //         assetName: ''
+    //     },
+    //     badges: ['UNKOWN']
+    // },
+    // {
+    //     installed: 'NOT_INSTALLED',
+    //     metadata: {
+    //         title: 'Blockchain Party - Zombie',
+    //         image: 'https://cdn.dlcompare.com/game_tetiere/upload/gameimage/file/call-of-duty-black-ops-2-file-48980dd1.jpeg',
+    //         description: '',
+    //         icon: 'https://cdn.discordapp.com/attachments/522069091255582731/1139225777204887592/favicon_3.png'
+    //     },
+    //     token: {
+    //         policy: '',
+    //         assetName: ''
+    //     },
+    //     badges: ['UNKOWN']
+    // },
+    // {
+    //     installed: 'INSTALLED',
+    //     path: '',
+    //     metadata: {
+    //         title: 'Blockchain Party - Zombie',
+    //         image: 'https://cdn.discordapp.com/attachments/522069091255582731/1139222000741666987/landing2.png',
+    //         description: '',
+    //         icon: 'https://cdn.discordapp.com/attachments/522069091255582731/1139225777204887592/favicon_3.png'
+    //     },
+    //     token: {
+    //         policy: '',
+    //         assetName: ''
+    //     },
+    //     badges: ['UNKOWN']
+    // }
+]
 
 function App(): JSX.Element {
-  return (
-    <div className="container">
-      <Versions></Versions>
+    const [games, setGames] = useState(getListOfGames())
 
-      <svg className="hero-logo" viewBox="0 0 900 300">
-        <use xlinkHref={`${icons}#electron`} />
-      </svg>
-      <h2 className="hero-text">
-        You{"'"}ve successfully created an Electron project with React and TypeScript
-      </h2>
-      <p className="hero-tagline">
-        Please try pressing <code>F12</code> to open the devTool
-      </p>
+    return (
+        <FluentProvider theme={webLightTheme}>
+            <FilepathSelection />
+            <Button onClick={() => {
+                addGameEntry(cards[0])
+                setGames(getListOfGames())
+            }} appearance="primary">Add Game</Button>
 
-      <div className="links">
-        <div className="link-item">
-          <a target="_blank" href="https://electron-vite.org" rel="noopener noreferrer">
-            Documentation
-          </a>
-        </div>
-        <div className="link-item link-dot">•</div>
-        <div className="link-item">
-          <a
-            target="_blank"
-            href="https://github.com/alex8088/electron-vite"
-            rel="noopener noreferrer"
-          >
-            Getting Help
-          </a>
-        </div>
-        <div className="link-item link-dot">•</div>
-        <div className="link-item">
-          <a
-            target="_blank"
-            href="https://github.com/alex8088/quick-start/tree/master/packages/create-electron"
-            rel="noopener noreferrer"
-          >
-            create-electron
-          </a>
-        </div>
-      </div>
+            {/* <GameCard
+                installed='INSTALLED'
+                title='Blockchain Party - Zombie'
+                image='https://cdn.dlcompare.com/game_tetiere/upload/gameimage/file/call-of-duty-black-ops-2-file-48980dd1.jpeg'
+                path=''
+                icon='https://cdn.discordapp.com/attachments/522069091255582731/1139225777204887592/favicon_3.png'
+                token={{policy: "", assetName: ""}}
+                badges={["UNKOWN"]}
+            />
+            <GameCard
+                installed='NOT_INSTALLED'
+                title='Demo game'
+                image='https://cdn.discordapp.com/attachments/522069091255582731/1139222000741666987/landing2.png'
+                token={{policy: "", assetName: ""}}
+                badges={["VERIFIED", "OPEN_SOURCE", "VERIFIED", "OPEN_SOURCE", "..."]}
+            /> */}
 
-      <div className="features">
-        <div className="feature-item">
-          <article>
-            <h2 className="title">Configuring</h2>
-            <p className="detail">
-              Config with <span>electron.vite.config.ts</span> and refer to the{' '}
-              <a target="_blank" href="https://electron-vite.org/config" rel="noopener noreferrer">
-                config guide
-              </a>
-              .
-            </p>
-          </article>
-        </div>
-        <div className="feature-item">
-          <article>
-            <h2 className="title">HMR</h2>
-            <p className="detail">
-              Edit <span>src/renderer</span> files to test HMR. See{' '}
-              <a
-                target="_blank"
-                href="https://electron-vite.org/guide/hmr.html"
-                rel="noopener noreferrer"
-              >
-                docs
-              </a>
-              .
-            </p>
-          </article>
-        </div>
-        <div className="feature-item">
-          <article>
-            <h2 className="title">Hot Reloading</h2>
-            <p className="detail">
-              Run{' '}
-              <span>
-                {"'"}electron-vite dev --watch{"'"}
-              </span>{' '}
-              to enable. See{' '}
-              <a
-                target="_blank"
-                href="https://electron-vite.org/guide/hot-reloading.html"
-                rel="noopener noreferrer"
-              >
-                docs
-              </a>
-              .
-            </p>
-          </article>
-        </div>
-        <div className="feature-item">
-          <article>
-            <h2 className="title">Debugging</h2>
-            <p className="detail">
-              Check out <span>.vscode/launch.json</span>. See{' '}
-              <a
-                target="_blank"
-                href="https://electron-vite.org/guide/debugging.html"
-                rel="noopener noreferrer"
-              >
-                docs
-              </a>
-              .
-            </p>
-          </article>
-        </div>
-        <div className="feature-item">
-          <article>
-            <h2 className="title">Source Code Protection</h2>
-            <p className="detail">
-              Supported via built-in plugin <span>bytecodePlugin</span>. See{' '}
-              <a
-                target="_blank"
-                href="https://electron-vite.org/guide/source-code-protection.html"
-                rel="noopener noreferrer"
-              >
-                docs
-              </a>
-              .
-            </p>
-          </article>
-        </div>
-        <div className="feature-item">
-          <article>
-            <h2 className="title">Packaging</h2>
-            <p className="detail">
-              Use{' '}
-              <a target="_blank" href="https://www.electron.build" rel="noopener noreferrer">
-                electron-builder
-              </a>{' '}
-              and pre-configured to pack your app.
-            </p>
-          </article>
-        </div>
-      </div>
-    </div>
-  )
+            <GameCardMasonry cards={games} />
+        </FluentProvider>
+    )
 }
 
 export default App
