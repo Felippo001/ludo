@@ -17,3 +17,6 @@ aiken-test/test/validators/test_validator.ak
 nodegit-test/main.js
 nodegit-test/package-lock.json
 nodegit-test/package.json
+**/nodegit-test
+nodegit-test/repo
+nodegit-test/repo2
